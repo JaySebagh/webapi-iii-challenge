@@ -4,6 +4,11 @@ const userdb = require('../helpers/userDb.js');
 
 const router = express.Router();
 
+function caps(req, res, next) {
+    req.body.name = req.body.name.toUpperCase();
+    next();
+}
+
 // The R in CRUD
 // returns all the users
 router.get('/', (req, res) => {
@@ -47,7 +52,7 @@ router.get('/post/:id', (req, res) => {
 
 // The C in CRUD
 // adds a new user requiring user_id and text
-router.post('/', (req, res) => {
+router.post('/', caps,(req, res) => {
     const user = req.body;
     userdb
     .insert(user)
@@ -76,7 +81,7 @@ router.delete('/:id', (req, res) => {
 
 // The U in CRUD
 // update user
-router.put('/:id', (req, res) => {
+router.put('/:id', caps, (req, res) => {
     const { id } = req.params;
     const changes = req.body;
     
