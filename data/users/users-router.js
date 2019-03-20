@@ -33,6 +33,18 @@ router.get('/:id', (req, res) => {
         });
 })
 
+// returns the user post based off the id in the URL
+router.get('/post/:id', (req, res) => {
+    const userId = req.params.id;
+    userdb.getUserPosts(userId)
+        .then(user => {
+                res.status(200).json(user);
+        })
+        .catch(err => {
+            res.status(500).json({ error: "The user post information could not be retrieved." });
+        });
+})
+
 // The C in CRUD
 // adds a new user requiring user_id and text
 router.post('/', (req, res) => {
